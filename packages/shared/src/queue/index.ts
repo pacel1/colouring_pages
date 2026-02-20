@@ -8,7 +8,8 @@
  */
 
 import { Queue, QueueOptions } from 'bullmq';
-import { RETRY_CONFIG, type JobData, type JobType } from './jobTypes.js';
+import { type JobData, type JobType } from './jobTypes.js';
+import { QUEUE_CONFIG, REMOVE_COMPLETED_AGE_SECONDS, REMOVE_FAILED_AGE_SECONDS } from './config.js';
 
 // Queue names
 export const QUEUE_NAMES = {
@@ -39,20 +40,16 @@ export function createQueue(name: QueueName, options?: QueueOptions): Queue<JobD
   return new Queue<JobData>(name, {
     connection,
     defaultJobOptions: {
-      // Retry configuration
-      attempts: RETRY_CONFIG.maxAttempts,
-      backoff: {
-        type: 'exponential' as const,
-        firstDelay: RETRY_CONFIG.firstDelay,
-        maxDelay: RETRY_CONFIG.maxDelay,
-      },
-      // Remove completed jobs after 24 hours
+      // Retry configuration from config.ts
+      attempts: QUEUE_CONFIG.attempts,
+      backoff: QUEUE_CONFIG.backoff,
+      // Remove completed jobs after configured time
       removeOnComplete: {
-        age: 86400,
+        age: REMOVE_COMPLETED_AGE_SECONDS,
       },
-      // Remove failed jobs after 7 days
+      // Remove failed jobs after configured time
       removeOnFail: {
-        age: 604800,
+        age: REMOVE_FAILED_AGE_SECONDS,
       },
     },
     ...options,
@@ -148,3 +145,6 @@ export async function closeQueues(): Promise<void> {
 
 // Export job types
 export * from './jobTypes.js';
+
+// Export queue config
+export * from './config.js';
