@@ -50,6 +50,10 @@ export {
   ASSET_TYPE_LABELS,
 } from './types/asset.js';
 
+// DB exports
+export { db, schema } from './db/index.js';
+export type { Database } from './db/index.js';
+
 // DB Schema exports
 export {
   localeEnum,
