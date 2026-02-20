@@ -54,6 +54,9 @@ export {
 export { db, schema, client, checkDatabaseHealth } from './db/index';
 export type { Database } from './db/index';
 
+// Drizzle ORM operators
+export { eq, ne, gt, gte, lt, lte, like, ilike, inArray, notInArray, isNull, isNotNull, and, or, asc, desc, sql } from 'drizzle-orm';
+
 // DB Schema exports
 export {
   localeEnum,
