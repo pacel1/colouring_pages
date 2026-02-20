@@ -5,11 +5,13 @@
  * 
  * Eksporty:
  * - config/env: walidacja zmiennych środowiskowych
+ * - logger: standard logowania
  * - types: wspólne typy (Job, Content, Asset interfaces)
  * - db: schemat Drizzle (Category, Item, Variant, Asset, Job, Log)
  */
 
 export * from './config/env.js';
+export * from './logger.js';
 
 // Re-export types with explicit names to avoid conflicts with DB types
 export {
