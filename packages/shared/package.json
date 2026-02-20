@@ -7,13 +7,16 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./config/env": "./src/config/env.ts"
+    "./config/env": "./src/config/env.ts",
+    "./types": "./src/types/index.ts",
+    "./db": "./src/db/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "dotenv": "^16.6.1",
+    "drizzle-orm": "^0.29.5",
     "zod": "^3.23.0"
   },
   "devDependencies": {
