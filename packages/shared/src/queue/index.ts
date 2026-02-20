@@ -8,8 +8,8 @@
  */
 
 import { Queue, QueueOptions } from 'bullmq';
-import { type JobData, type JobType } from './jobTypes.js';
-import { QUEUE_CONFIG, REMOVE_COMPLETED_AGE_SECONDS, REMOVE_FAILED_AGE_SECONDS } from './config.js';
+import { type JobData, type JobType } from './jobTypes';
+import { QUEUE_CONFIG, REMOVE_COMPLETED_AGE_SECONDS, REMOVE_FAILED_AGE_SECONDS } from './config';
 
 // Queue names
 export const QUEUE_NAMES = {
@@ -86,7 +86,7 @@ export async function addJob(
   
   // Generate deterministic job ID for idempotency
   // Import dynamically to avoid circular deps
-  const { generateJobId } = await import('./jobTypes.js');
+  const { generateJobId } = await import('./jobTypes');
   const jobId = options?.jobId || generateJobId(jobType, data);
   
   await queue.add(jobType, data, {
@@ -144,7 +144,7 @@ export async function closeQueues(): Promise<void> {
 }
 
 // Export job types
-export * from './jobTypes.js';
+export * from './jobTypes';
 
 // Export queue config
-export * from './config.js';
+export * from './config';

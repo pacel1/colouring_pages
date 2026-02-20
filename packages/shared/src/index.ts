@@ -85,7 +85,7 @@ export {
 } from './db/schema';
 
 // Queue exports
-export * from './queue/index.js';
+export * from './queue/index';
 
 // Net exports (retry, http utilities)
-export * from './net/retry.js';
+export * from './net/retry';
