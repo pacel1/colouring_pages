@@ -10,8 +10,8 @@
  * - db: schemat Drizzle (Category, Item, Variant, Asset, Job, Log)
  */
 
-export * from './config/env.js';
-export * from './logger.js';
+export * from './config/env';
+export * from './logger';
 
 // Re-export types with explicit names to avoid conflicts with DB types
 export {
@@ -23,7 +23,7 @@ export {
   JOB_TYPE_LABELS,
   JOB_STATUS_LABELS,
   DEFAULT_JOB_CONFIG,
-} from './types/job.js';
+} from './types/job';
 
 export {
   type ContentLanguage,
@@ -37,7 +37,7 @@ export {
   LANGUAGE_LABELS,
   FORMAT_LABELS,
   DIFFICULTY_LABELS,
-} from './types/content.js';
+} from './types/content';
 
 export {
   type AssetType,
@@ -48,11 +48,11 @@ export {
   MIME_TYPE_EXTENSIONS,
   MAX_ASSET_SIZES,
   ASSET_TYPE_LABELS,
-} from './types/asset.js';
+} from './types/asset';
 
 // DB exports
-export { db, schema } from './db/index.js';
-export type { Database } from './db/index.js';
+export { db, schema, client, checkDatabaseHealth } from './db/index';
+export type { Database } from './db/index';
 
 // DB Schema exports
 export {
@@ -79,4 +79,4 @@ export {
   type NewJob,
   type Log,
   type NewLog,
-} from './db/schema.js';
+} from './db/schema';
