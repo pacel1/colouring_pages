@@ -9,12 +9,14 @@
     ".": "./src/index.ts",
     "./config/env": "./src/config/env.ts",
     "./types": "./src/types/index.ts",
-    "./db": "./src/db/index.ts"
+    "./db": "./src/db/index.ts",
+    "./queue": "./src/queue/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "bullmq": "^5.28.2",
     "dotenv": "^16.6.1",
     "drizzle-orm": "^0.45.1",
     "postgres": "^3.4.8",
