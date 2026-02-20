@@ -15,24 +15,20 @@
     "dev:worker": "echo 'Run: pnpm --filter worker dev'",
     "dev:db": "docker-compose up -d postgres",
     "dev:redis": "docker-compose up -d redis",
-    
     "=== LINT & FORMAT ===": "==========",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    
     "=== BUILD & TEST ===": "==========",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "test:watch": "pnpm -r test:watch",
     "typecheck": "pnpm -r typecheck",
-    
     "=== CHECKS ===": "==========",
     "check:env": "node scripts/check-env.js",
     "check:env:web": "node scripts/check-env.js web",
     "check:env:worker": "node scripts/check-env.js worker",
-    
     "=== DOCKER ===": "==========",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
@@ -40,28 +36,25 @@
     "docker:ps": "docker-compose ps",
     "docker:restart": "docker-compose restart",
     "docker:clean": "docker-compose down -v",
-    
     "=== DATABASE ===": "==========",
     "db:migrate": "pnpm -r db:migrate",
     "db:seed": "pnpm -r db:seed",
     "db:studio": "pnpm -r db:studio",
-    
     "=== RELEASE ===": "==========",
     "release": "changesets version && pnpm install && changesets publish"
   },
-  
   "devDependencies": {
-    "typescript": "^5.3.0",
-    "eslint": "^8.57.0",
-    "prettier": "^3.3.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
-    "eslint-config-prettier": "^9.1.0"
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.0",
+    "tsx": "^4.15.0",
+    "typescript": "^5.3.0"
   },
   "engines": {
     "node": ">=20.9.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@8.15.0",
-  "private": true
+  "packageManager": "pnpm@8.15.0"
 }
