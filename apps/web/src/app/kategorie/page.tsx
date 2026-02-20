@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { db, categories, items, eq, asc } from '@colouring-pages/shared';
+import { db, categories, eq, asc } from '@colouring-pages/shared';
 
 export const metadata: Metadata = {
   title: 'Kategorie kolorowanek - colouring-Pages',
@@ -26,15 +26,8 @@ export default async function CategoriesPage({
     offset,
   });
 
-  // Pobierz liczbę itemów dla każdej kategorii
-  const categoriesWithCount = await Promise.all(
-    categoryList.map(async (category) => {
-      const itemsCount = await db.query.items.findFirst({
-        where: eq(items.categoryId, category.id),
-      });
-      return { ...category };
-    })
-  );
+  // Return categories (count removed - was unused)
+  const categoriesWithCount = categoryList;
 
   return (
     <div className="page">
