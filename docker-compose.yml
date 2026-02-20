@@ -1,0 +1,92 @@
+# =============================================================================
+# colouring-Pages - Docker Compose (Development Only!)
+# =============================================================================
+# UWAGA: Tylko do lokalnego development!
+# Nie używać w produkcji - brak zabezpieczeń.
+# =============================================================================
+
+services:
+  # =============================================================================
+  # PostgreSQL Database
+  # =============================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: colouring-pages-postgres
+    restart: unless-stopped
+    
+    # Port only on localhost (security!)
+    ports:
+      - "127.0.0.1:5432:5432"
+    
+    environment:
+      # DEV ONLY - nie używać w produkcji!
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: colouring_dev
+      
+      # Performance settings for dev
+      POSTGRES_MAX_CONNECTIONS: 20
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devuser -d colouring_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # =============================================================================
+  # Redis (for BullMQ Queue)
+  # =============================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: colouring-pages-redis
+    restart: unless-stopped
+    
+    # Port only on localhost (security!)
+    ports:
+      - "127.0.0.1:6379:6379"
+    
+    # No password for dev (local only!)
+    # For production use password!
+    
+    volumes:
+      - redis_data:/data
+    
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # =============================================================================
+  # Optional: Adminer (DB Admin UI)
+  # =============================================================================
+  adminer:
+    image: adminer:latest
+    container_name: colouring-pages-adminer
+    restart: unless-stopped
+    
+    ports:
+      - "127.0.0.1:8080:8080"
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+# =============================================================================
+# Volumes (persistent data)
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  default:
+    name: colouring-pages-network

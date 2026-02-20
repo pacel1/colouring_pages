@@ -1,0 +1,56 @@
+{
+  "name": "colouring-pages",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Programmatic SEO portal with coloring pages for children",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "=== DEVELOPMENT ===": "==========",
+    "dev": "pnpm dev:infra && pnpm dev:web",
+    "dev:infra": "docker-compose up -d",
+    "dev:web": "echo 'Run: pnpm --filter web dev'",
+    "dev:worker": "echo 'Run: pnpm --filter worker dev'",
+    "dev:db": "docker-compose up -d postgres",
+    "dev:redis": "docker-compose up -d redis",
+    
+    "=== BUILD & TEST ===": "==========",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "test:watch": "pnpm -r test:watch",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    
+    "=== CHECKS ===": "==========",
+    "check:env": "node scripts/check-env.js",
+    "check:env:web": "node scripts/check-env.js web",
+    "check:env:worker": "node scripts/check-env.js worker",
+    
+    "=== DOCKER ===": "==========",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:ps": "docker-compose ps",
+    "docker:restart": "docker-compose restart",
+    "docker:clean": "docker-compose down -v",
+    
+    "=== DATABASE ===": "==========",
+    "db:migrate": "pnpm -r db:migrate",
+    "db:seed": "pnpm -r db:seed",
+    "db:studio": "pnpm -r db:studio",
+    
+    "=== RELEASE ===": "==========",
+    "release": "changesets version && pnpm install && changesets publish"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "private": true
+}

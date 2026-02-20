@@ -30,18 +30,58 @@ Polityka obowiązuje dla:
 
 ### 2.1 Kategorie Główne
 
-| Kategoria | Przykłady |
-|-----------|-----------|
-| Zwierzęta | Kot, pies, słoń, lew, żaba, motyl, rybka |
-| Pojazdy | Samochód, ciężarówka, samolot, statek, pociąg |
-| Bajki | Kopciuszek, Czerwony Kapturek (własna wersja) |
-| Natura | Drzewa, kwiaty, owoce, warzywa |
-| Postacie | Dzieci, rodzina, zwierzęta anthropomorphic |
-| Abecadło | Litery A-Z z obrazkami |
-| Cyfry | Liczby 0-9 z obrazkami |
-| Kształty | Koło, kwadrat, trójkąt |
-| Sporty | Piłka nożna, koszykówka, pływanie |
-| Sezonowe | Święta Bożego Narodzenia, Halloween, Wielkanoc |
+| Kategoria              | Przykłady                                   |
+| ---------------------- | ------------------------------------------- |
+| Zwierzęta domowe       | Kot, pies, królik, chomik, świnka morska    |
+| Zwierzęta leśne        | Lis, jeleń, wilk, niedźwiedź, dzik          |
+| Zwierzęta egzotyczne   | Tygrys, zebra, panda, koala, żyrafa         |
+| Zwierzęta gospodarskie | Krowa, świnia, kura, koń, owca              |
+| Zwierzęta morskie      | Delfin, rekin, ośmiornica, wieloryb, meduza |
+| Ptaki                  | Papuga, sowa, orzeł, flaming, bocian        |
+| Dinozaury              | T-Rex, triceratops, stegozaur, brontozaur   |
+| Owady                  | Motyl, pszczoła, biedronka, mrówka          |
+| Gady i płazy           | Żaba, wąż, krokodyl, żółw                   |
+| Zwierzęta polarne      | Pingwin, niedźwiedź polarny, mors, foka     |
+| Samochody              | Samochód osobowy, sportowy, SUV             |
+| Ciężarówki             | Tir, betoniarka, cysterna, wywrotka         |
+| Maszyny budowlane      | Koparka, dźwig, walec, spychacz             |
+| Służby ratunkowe       | Straż pożarna, policja, ambulans            |
+| Lotnictwo              | Samolot, helikopter, szybowiec              |
+| Kosmos                 | Rakieta, astronauta, łazik kosmiczny        |
+| Pojazdy wodne          | Statek, łódź, jacht, łódź podwodna          |
+| Kolej                  | Lokomotywa, metro, tramwaj                  |
+| Motocykle              | Motor, skuter, quad                         |
+| Maszyny rolnicze       | Traktor, kombajn, przyczepa                 |
+| Rycerze i księżniczki  | Zamek, smok, korona                         |
+| Piraci                 | Statek piracki, mapa skarbów                |
+| Superbohaterowie       | Maska, peleryna, bohater                    |
+| Czarodzieje            | Różdżka, eliksiry, księga czarów            |
+| Wróżki                 | Skrzydła, magiczny pył                      |
+| Potwory                | Przyjazne potworki                          |
+| Roboty                 | Robot humanoid, robot pies                  |
+| Kosmici                | UFO, alien                                  |
+| Syreny                 | Podwodny świat, muszle                      |
+| Smoki                  | Latający smok, smok ziejący ogniem          |
+| Abecadło               | Litery A-Z z obrazkami                      |
+| Cyfry                  | Liczby 0-9 z obrazkami                      |
+| Kształty               | Koło, kwadrat, trójkąt                      |
+| Kolory                 | Czerwony, niebieski, zielony                |
+| Pory roku              | Wiosna, lato, jesień, zima                  |
+| Dni tygodnia           | Poniedziałek – Niedziela                    |
+| Miesiące               | Styczeń – Grudzień                          |
+| Zawody                 | Lekarz, strażak, policjant                  |
+| Ciało człowieka        | Ręka, oko, serce                            |
+| Emocje                 | Radość, smutek, złość                       |
+| Boże Narodzenie        | Choinka, Mikołaj, prezenty                  |
+| Wielkanoc              | Pisanki, zajączek, koszyk                   |
+| Halloween              | Dynia, duch, nietoperz                      |
+| Urodziny               | Tort, balony, świeczki                      |
+| Jedzenie               | Pizza, lody, owoce                          |
+| Sport                  | Piłka nożna, koszykówka, pływanie           |
+| Natura                 | Góry, drzewa, kwiaty                        |
+| Pogoda                 | Deszcz, śnieg, tęcza                        |
+| Dom i rodzina          | Mama, tata, dzieci                          |
+| Szkoła                 | Plecak, klasa, zeszyt                       |
 
 ### 2.2 Motywy Edukacyjne
 
