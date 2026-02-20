@@ -2,10 +2,20 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
 
+const siteUrl = process.env.SITE_URL || 'http://localhost:3000';
+
 export const metadata: Metadata = {
-  title: 'colouring-Pages - Kolorowanki dla dzieci',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'colouring-Pages - Kolorowanki dla dzieci',
+    template: '%s | colouring-Pages',
+  },
   description:
     'Programmatic SEO portal z kolorowankami dla dzieci. Darmowe kolorowanki do druku.',
+  robots: {
+    index: process.env.NODE_ENV === 'production',
+    follow: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default function RootLayout({
