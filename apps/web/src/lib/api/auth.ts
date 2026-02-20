@@ -74,3 +74,15 @@ export function notImplementedResponse(message = 'Not Implemented'): Response {
     },
   });
 }
+
+/**
+ * Create JSON response
+ */
+export function jsonResponse(data: unknown, status = 200): Response {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
