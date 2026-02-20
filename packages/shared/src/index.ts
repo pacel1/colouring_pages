@@ -86,3 +86,6 @@ export {
 
 // Queue exports
 export * from './queue/index.js';
+
+// Net exports (retry, http utilities)
+export * from './net/retry.js';
