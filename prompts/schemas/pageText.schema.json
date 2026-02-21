@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Page Text Content",
+  "description": "Schema for SEO text content for coloring pages (PL/EN)",
+  "type": "object",
+  "required": ["title", "description", "keywords"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 255,
+      "description": "Main title of the coloring page"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Description of the coloring page"
+    },
+    "keywords": {
+      "type": "array",
+      "description": "SEO keywords for the page",
+      "minItems": 3,
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "maxLength": 50,
+        "description": "Single keyword"
+      }
+    },
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 70,
+      "description": "SEO title for search engines (max 70 chars)"
+    },
+    "metaDescription": {
+      "type": "string",
+      "maxLength": 160,
+      "description": "SEO description for search engines (max 160 chars)"
+    }
+  }
+}

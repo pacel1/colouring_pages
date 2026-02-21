@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Coloring Page Variants",
+  "description": "Schema for generating coloring page variants (different formats)",
+  "type": "object",
+  "required": ["variants"],
+  "properties": {
+    "variants": {
+      "type": "array",
+      "description": "Array of variants for the coloring page",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["format", "title", "description"],
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": ["png", "svg", "html"],
+            "description": "Output format"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Title of the variant"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 1000,
+            "description": "Description of the coloring page variant"
+          },
+          "metaTitle": {
+            "type": "string",
+            "maxLength": 70,
+            "description": "SEO title for search engines"
+          },
+          "metaDescription": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "SEO description for search engines"
+          }
+        }
+      }
+    }
+  }
+}
