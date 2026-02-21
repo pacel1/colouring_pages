@@ -25,6 +25,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "tsx scripts/test-e2e.ts",
     "typecheck": "pnpm -r typecheck",
     "=== PROMPTS ===": "==========",
     "prompt:harness": "tsx scripts/prompt-harness.ts",
