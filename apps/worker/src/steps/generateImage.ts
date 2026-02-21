@@ -2,40 +2,26 @@
  * Generate Image Step
  * 
  * Generates coloring page images using DALL-E.
- * Creates two variants: preview (web) and print (high quality).
+ * Creates single image: 1024x1024 (used for both web preview and print).
  */
 
 import { db, items, variants, eq } from '@colouring-pages/shared';
 import { createOpenAIClientWrapper } from '@colouring-pages/shared/ai';
 
 /**
- * Image type
- */
-export type ImageType = 'preview' | 'print';
-
-/**
- * Image generation options
+ * Image generation options (single size for cost optimization)
  */
 interface ImageOptions {
-  type: ImageType;
-  size: '1024x1024' | '1792x1024' | '1024x1792';
-  quality: 'standard' | 'hd';
+  size: '1024x1024';
+  quality: 'standard';
 }
 
 /**
  * Default image options
  */
-const IMAGE_OPTIONS: Record<ImageType, ImageOptions> = {
-  preview: {
-    type: 'preview',
-    size: '1024x1024',
-    quality: 'standard',
-  },
-  print: {
-    type: 'print',
-    size: '1792x1024',
-    quality: 'hd',
-  },
+const IMAGE_OPTIONS: ImageOptions = {
+  size: '1024x1024',
+  quality: 'standard',
 };
 
 /**
@@ -53,7 +39,6 @@ function buildImagePrompt(item: { titlePl: string; titleEn: string; prompt?: str
  */
 async function generateSingleImage(
   itemId: string,
-  options: ImageOptions,
   maxRetries: number = 3
 ): Promise<{ buffer: Buffer; width: number; height: number } | null> {
   // Fetch item
@@ -70,14 +55,11 @@ async function generateSingleImage(
   
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      console.log(`[generateImage] Generating ${options.type} (attempt ${attempt}/${maxRetries})`);
+      console.log(`[generateImage] Generating image (attempt ${attempt}/${maxRetries})`);
       
       const client = createOpenAIClientWrapper();
       
-      const result = await client.generateImage(prompt, {
-        size: options.size,
-        quality: options.quality,
-      });
+      const result = await client.generateImage(prompt, IMAGE_OPTIONS);
 
       if (!result.metrics.success || !result.b64Json) {
         console.error('[generateImage] Generation failed:', result.metrics.error);
@@ -87,10 +69,11 @@ async function generateSingleImage(
       // Decode base64 to buffer
       const buffer = Buffer.from(result.b64Json, 'base64');
       
-      // Parse dimensions from size
-      const [width, height] = options.size.split('x').map(Number);
+      // Dimensions
+      const width = 1024;
+      const height = 1024;
 
-      console.log(`[generateImage] ${options.type} generated successfully, size: ${buffer.length} bytes`);
+      console.log(`[generateImage] Generated successfully, size: ${buffer.length} bytes`);
       
       return { buffer, width, height };
 
@@ -111,7 +94,7 @@ async function generateSingleImage(
 }
 
 /**
- * Generate images for an item
+ * Generate image for an item
  */
 export async function generateImage(itemId: string): Promise<boolean> {
   console.log('[generateImage] Starting for item:', itemId);
@@ -132,7 +115,7 @@ export async function generateImage(itemId: string): Promise<boolean> {
     return false;
   }
 
-  // Get or create variant
+  // Check if variant exists
   const variant = await db.query.variants.findFirst({
     where: eq(variants.itemId, itemId),
   });
@@ -142,24 +125,15 @@ export async function generateImage(itemId: string): Promise<boolean> {
     return false;
   }
 
-  // Generate both image types
-  const imageTypes: ImageType[] = ['preview', 'print'];
+  // Generate single image
+  const imageResult = await generateSingleImage(itemId);
   
-  for (const imageType of imageTypes) {
-    const options = IMAGE_OPTIONS[imageType];
-    
-    console.log(`[generateImage] Generating ${imageType}...`);
-    
-    const imageResult = await generateSingleImage(itemId, options);
-    
-    if (!imageResult) {
-      console.error(`[generateImage] Failed to generate ${imageType}`);
-      continue;
-    }
-
-    console.log(`[generateImage] ${imageType} generated, size: ${imageResult.buffer.length} bytes`);
+  if (!imageResult) {
+    console.error('[generateImage] Failed to generate image');
+    return false;
   }
 
+  console.log(`[generateImage] Generated, size: ${imageResult.buffer.length} bytes`);
   return true;
 }
 
