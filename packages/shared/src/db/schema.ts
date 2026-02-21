@@ -28,6 +28,7 @@ export const jobStatusEnum = pgEnum('job_status', ['pending', 'processing', 'com
 export const jobStepStatusEnum = pgEnum('job_step_status', ['pending', 'processing', 'completed', 'failed']);
 export const stepNameEnum = pgEnum('step_name', ['generate_image', 'process_image', 'generate_text', 'upload_storage', 'finalize']);
 export const logLevelEnum = pgEnum('log_level', ['debug', 'info', 'warn', 'error']);
+export const moderationStatusEnum = pgEnum('moderation_status', ['pending', 'approved', 'rejected', 'needs_review']);
 
 // =============================================================================
 // Tables
@@ -61,6 +62,8 @@ export const items = pgTable('items', {
   difficulty: integer('difficulty').default(1),
   isPublished: boolean('is_published').default(false),
   publishedAt: timestamp('published_at'),
+  moderationStatus: moderationStatusEnum('moderation_status').default('pending'),
+  moderationNote: text('moderation_note'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
