@@ -25,6 +25,8 @@
     "test": "pnpm -r test",
     "test:watch": "pnpm -r test:watch",
     "typecheck": "pnpm -r typecheck",
+    "=== PROMPTS ===": "==========",
+    "prompt:harness": "tsx scripts/prompt-harness.ts",
     "=== CHECKS ===": "==========",
     "check:env": "node scripts/check-env.js",
     "check:env:web": "node scripts/check-env.js web",
