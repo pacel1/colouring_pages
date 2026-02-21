@@ -1,18 +1,20 @@
 /**
  * AI Module - Factory and exports
  * 
- * Unified AI interface for generating coloring pages.
- * Currently supports OpenAI (DALL-E).
- * 
  * Usage:
  * import { createAIClient } from '@colouring-pages/shared/ai';
- * 
  * const ai = createAIClient();
- * const image = await ai.generateImage('a cat coloring page');
+ * 
+ * For low-level access with metrics:
+ * import { createOpenAIClientWrapper } from '@colouring-pages/shared/ai';
+ * const client = createOpenAIClientWrapper();
  */
 
 import type { AIClient } from './types';
 import { createOpenAIClient } from './openai';
+
+// Re-export client wrapper
+export { createOpenAIClientWrapper, OpenAIClientWrapper } from './openaiClient';
 
 export type {
   AIClient,
@@ -20,7 +22,6 @@ export type {
   AIConfig,
   GenerateVariantsInput,
   GenerateTextInput,
-  ImageOptions,
   TextContent,
   ModerationResult,
 } from './types';
@@ -28,10 +29,7 @@ export type {
 export { DEFAULT_MODELS } from './types';
 
 /**
- * Create AI client based on configuration
- * 
- * Currently only OpenAI is implemented.
- * For local models, use Ollama provider.
+ * Create high-level AI client
  */
 export function createAIClient(): AIClient {
   return createOpenAIClient();
