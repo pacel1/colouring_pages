@@ -15,7 +15,9 @@
     "./ai": "./src/ai/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "drizzle-kit push",
+    "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.995.0",

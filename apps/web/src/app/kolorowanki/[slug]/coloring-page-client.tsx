@@ -3,11 +3,25 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { generateAndDownloadPdf } from '@/lib/pdf-generator';
-import type { Category, ColoringPage } from '@/lib/mock-data';
+import { AdBannerPlaceholder } from '@/components/AdPlaceholder';
 
 interface ColoringPageClientProps {
-  page: ColoringPage;
-  category: Category | null;
+  page: {
+    slug: string;
+    title: string;
+    description: string;
+    imageUrl: string;
+    categorySlug: string;
+    difficulty: 'easy' | 'medium' | 'hard';
+    language: 'pl' | 'en';
+  };
+  category: {
+    slug: string;
+    name: string;
+    description: string;
+    itemCount: number;
+    imageUrl: string;
+  } | null;
 }
 
 export function ColoringPageClient({ page, category }: ColoringPageClientProps) {
@@ -46,33 +60,30 @@ export function ColoringPageClient({ page, category }: ColoringPageClientProps) 
       </div>
 
       <article className="coloring-page">
+        {/* AdPlaceholder - Banner przed kolorowanką */}
+        <AdBannerPlaceholder />
+
         <header>
           <h1>{page.title}</h1>
           <p className="coloring-description">{page.description}</p>
         </header>
 
+        {/* AdSense - Banner pod tytułem */}
+        <AdBannerPlaceholder />
+
         <div className="coloring-preview">
-          <div className="coloring-placeholder-large">{page.title.charAt(0)}</div>
-          <p className="placeholder-note">
-            [Tu będzie obraz kolorowanki - placeholder do zastąpienia]
-          </p>
+          {page.imageUrl ? (
+            <img 
+              src={page.imageUrl} 
+              alt={page.title}
+              className="coloring-image"
+            />
+          ) : (
+            <div className="coloring-placeholder-large">{page.title.charAt(0)}</div>
+          )}
         </div>
 
         <div className="coloring-meta">
-          <div className="meta-item">
-            <span className="meta-label">Poziom trudności:</span>
-            <span className={`difficulty difficulty-${page.difficulty}`}>
-              {page.difficulty === 'easy'
-                ? 'Łatwe'
-                : page.difficulty === 'medium'
-                  ? 'Średnie'
-                  : 'Trudne'}
-            </span>
-          </div>
-          <div className="meta-item">
-            <span className="meta-label">Język:</span>
-            <span>{page.language === 'pl' ? 'Polski' : 'Angielski'}</span>
-          </div>
           {category && (
             <div className="meta-item">
               <span className="meta-label">Kategoria:</span>

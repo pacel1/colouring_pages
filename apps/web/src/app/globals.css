@@ -59,6 +59,45 @@ main {
   min-height: calc(100vh - 200px);
 }
 
+/* Layout with sidebar */
+.layout-with-sidebar {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.sidebar-ads {
+  position: sticky;
+  top: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .layout-with-sidebar {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    order: -1;
+  }
+}
+
 .site-footer {
   background: #fff;
   padding: 1.5rem 0;
@@ -376,7 +415,112 @@ main {
   background: #7f8c8d;
 }
 
-/* Responsive */
+/* Print styles - hide everything except coloring page */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .coloring-preview,
+  .coloring-preview * {
+    visibility: visible;
+  }
+
+  .coloring-preview {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 5mm;
+    background: #fff;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .coloring-preview img {
+    max-width: 200mm !important;
+    max-height: 287mm !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    page-break-inside: avoid;
+  }
+
+  .coloring-placeholder-large {
+    font-size: 150mm;
+  }
+
+  .placeholder-note {
+    display: none;
+  }
+
+  /* Hide all other elements */
+  .site-header,
+  .site-footer,
+  .breadcrumbs,
+  header,
+  .coloring-meta,
+  .coloring-actions,
+  .ad-placeholder,
+  .sidebar,
+  .layout-with-sidebar {
+    display: none !important;
+  }
+}
+
+/* AdSense styles */
+.adsense-container {
+  min-height: 90px;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ad-banner {
+  min-height: 90px;
+}
+
+.ad-infeed {
+  min-height: 250px;
+  margin: 2rem 0;
+}
+
+.ad-rectangle {
+  min-height: 250px;
+}
+
+.ad-sticky {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  margin: 0;
+  border-radius: 0;
+}
+
 @media (max-width: 768px) {
   .site-header .container {
     flex-direction: column;

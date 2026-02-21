@@ -37,7 +37,18 @@ export default function RootLayout({
             </nav>
           </div>
         </header>
-        <main className="container">{children}</main>
+        
+        <div className="container layout-with-sidebar">
+          <main className="main-content">{children}</main>
+          <aside className="sidebar">
+            <div className="sidebar-ads">
+              <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>
+                📺 Reklama<br/>Rectangle<br/>(300x250)
+              </p>
+            </div>
+          </aside>
+        </div>
+        
         <footer className="site-footer">
           <div className="container">
             <p>&copy; 2026 colouring-Pages - Darmowe kolorowanki dla dzieci</p>

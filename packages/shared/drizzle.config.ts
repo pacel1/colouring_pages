@@ -5,6 +5,7 @@ export default defineConfig({
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgresql://devuser:devpassword@localhost:5432/colouring_dev',
+    url: process.env.DATABASE_URL!,
   },
+  migrationsTable: '__drizzle_migrations',
 });

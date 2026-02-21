@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { db, categories, items, eq, asc } from '@colouring-pages/shared';
+import { getCategoryBySlug, getColoringPagesByCategory } from '@/lib/mock-data';
+import { AdBannerPlaceholder, AdInFeedPlaceholder } from '@/components/AdPlaceholder';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -9,10 +10,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  
-  const category = await db.query.categories.findFirst({
-    where: eq(categories.slug, slug),
-  });
+  const category = getCategoryBySlug(slug);
 
   if (!category) {
     return {
@@ -21,39 +19,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${category.namePl} - Kolorowanki - colouring-Pages`,
-    description: category.descriptionPl,
+    title: `${category.name} - Kolorowanki - colouring-Pages`,
+    description: category.description,
   };
 }
 
-export default async function CategoryPage({ 
-  params,
-  searchParams,
-}: PageProps & {
-  searchParams: Promise<{ page?: string }>
-}) {
+export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;
-  const searchParamsResolved = await searchParams;
-  const page = parseInt(searchParamsResolved.page || '1', 10);
-  const limit = 20;
-  const offset = (page - 1) * limit;
-  
-  // Pobierz kategorię po slug
-  const category = await db.query.categories.findFirst({
-    where: eq(categories.slug, slug),
-  });
+  const category = getCategoryBySlug(slug);
 
   if (!category) {
     notFound();
   }
 
-  // Pobierz items tej kategorii
-  const pages = await db.query.items.findMany({
-    where: eq(items.categoryId, category.id),
-    orderBy: asc(items.createdAt),
-    limit,
-    offset,
-  });
+  const pages = getColoringPagesByCategory(slug);
 
   return (
     <div className="page">
@@ -62,51 +41,49 @@ export default async function CategoryPage({
         <span className="separator">›</span>
         <Link href="/kategorie">Kategorie</Link>
         <span className="separator">›</span>
-        <span className="current">{category.namePl}</span>
+        <span className="current">{category.name}</span>
       </div>
 
-      <h1>{category.namePl}</h1>
-      <p className="page-description">{category.descriptionPl}</p>
+      <h1>{category.name}</h1>
+      <p className="page-description">{category.description}</p>
+
+      {/* AdSense - Banner nad kolorowankami */}
+      <AdBannerPlaceholder />
 
       {pages.length === 0 ? (
         <p>Brak kolorowanek w tej kategorii.</p>
       ) : (
         <div className="coloring-grid">
-          {pages.map((page) => (
-            <Link
-              key={page.id}
-              href={`/kolorowanki/${page.slug}`}
-              className="coloring-card"
-            >
-              <div className="coloring-image">
-                <div className="coloring-placeholder">{page.titlePl.charAt(0)}</div>
-              </div>
-              <div className="coloring-info">
-                <h3>{page.titlePl}</h3>
-                <span className={`difficulty difficulty-${page.difficulty}`}>
-                  {page.difficulty === 1
-                    ? 'Łatwe'
-                    : page.difficulty === 2
-                      ? 'Średnie'
-                      : 'Trudne'}
-                </span>
-              </div>
-            </Link>
+          {pages.map((pageItem, index) => (
+            <>
+              <Link
+                key={pageItem.id}
+                href={`/kolorowanki/${pageItem.slug}`}
+                className="coloring-card"
+              >
+                <div className="coloring-image">
+                  <div className="coloring-placeholder">{pageItem.title.charAt(0)}</div>
+                </div>
+                <div className="coloring-info">
+                  <h3>{pageItem.title}</h3>
+                  <span className={`difficulty difficulty-${pageItem.difficulty}`}>
+                    {pageItem.difficulty === 'easy'
+                      ? 'Łatwe'
+                      : pageItem.difficulty === 'medium'
+                        ? 'Średnie'
+                        : 'Trudne'}
+                  </span>
+                </div>
+              </Link>
+              {/* In-feed ad co 6 kolorowanek */}
+              {index > 0 && index % 6 === 0 && <AdInFeedPlaceholder key={`ad-${index}`} />}
+            </>
           ))}
         </div>
       )}
 
-      {/* Pagination */}
-      {page > 1 && (
-        <Link href={`/kategorie/${slug}?page=${page - 1}`} className="pagination">
-          ← Poprzednia
-        </Link>
-      )}
-      {pages.length === limit && (
-        <Link href={`/kategorie/${slug}?page=${page + 1}`} className="pagination">
-          Następna →
-        </Link>
-      )}
+      {/* AdSense - Banner pod kolorowankami */}
+      <AdBannerPlaceholder />
     </div>
   );
 }

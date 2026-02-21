@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { db, categories, eq, asc } from '@colouring-pages/shared';
+import { getAllCategories } from '@/lib/mock-data';
+import { AdBannerPlaceholder, AdInFeedPlaceholder } from '@/components/AdPlaceholder';
 
 export const metadata: Metadata = {
   title: 'Kategorie kolorowanek - colouring-Pages',
@@ -8,26 +9,9 @@ export const metadata: Metadata = {
     'Wybierz kategorię kolorowanek dla swojego dziecka. Zwierzęta, samochody, bajki i wiele więcej.',
 };
 
-export default async function CategoriesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>
-}) {
-  const params = await searchParams;
-  const page = parseInt(params.page || '1', 10);
-  const limit = 20;
-  const offset = (page - 1) * limit;
-
-  // Pobierz kategorie z DB
-  const categoryList = await db.query.categories.findMany({
-    where: eq(categories.isActive, true),
-    orderBy: asc(categories.displayOrder),
-    limit,
-    offset,
-  });
-
-  // Return categories (count removed - was unused)
-  const categoriesWithCount = categoryList;
+export default async function CategoriesPage() {
+  // Użyj mock danych
+  const categoryList = getAllCategories();
 
   return (
     <div className="page">
@@ -43,33 +27,33 @@ export default async function CategoriesPage({
         darmowego druku.
       </p>
 
+      {/* AdSense - Banner nad kategoriami */}
+      <AdBannerPlaceholder />
+
       <div className="category-grid">
-        {categoriesWithCount.map((category) => (
-          <Link
-            key={category.id}
-            href={`/kategorie/${category.slug}`}
-            className="category-card"
-          >
-            <div className="category-image">
-              <div className="category-placeholder">{category.namePl.charAt(0)}</div>
-            </div>
-            <div className="category-info">
-              <h2>{category.namePl}</h2>
-              <p>{category.descriptionPl}</p>
-            </div>
-          </Link>
+        {categoryList.map((category, index) => (
+          <>
+            <Link
+              key={category.id}
+              href={`/kategorie/${category.slug}`}
+              className="category-card"
+            >
+              <div className="category-image">
+                <div className="category-placeholder">{category.name.charAt(0)}</div>
+              </div>
+              <div className="category-info">
+                <h2>{category.name}</h2>
+                <p>{category.description}</p>
+              </div>
+            </Link>
+            {/* In-feed ad co 4 kategorie */}
+            {index > 0 && index % 4 === 0 && <AdInFeedPlaceholder key={`ad-${index}`} />}
+          </>
         ))}
       </div>
 
-      {/* Pagination */}
-      {page > 1 && (
-        <Link href={`/kategorie?page=${page - 1}`} className="pagination">
-          ← Poprzednia
-        </Link>
-      )}
-      <Link href={`/kategorie?page=${page + 1}`} className="pagination">
-        Następna →
-      </Link>
+      {/* AdSense - Banner pod kategoriami */}
+      <AdBannerPlaceholder />
     </div>
   );
 }

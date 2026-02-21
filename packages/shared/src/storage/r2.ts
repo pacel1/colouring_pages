@@ -36,6 +36,7 @@ export function createR2Storage(): StorageClient {
       accessKeyId,
       secretAccessKey,
     },
+    forcePathStyle: true,
   });
 
   return {

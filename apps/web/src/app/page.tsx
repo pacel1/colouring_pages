@@ -1,34 +1,50 @@
 import Link from 'next/link';
-import { db, categories, eq, asc } from '@colouring-pages/shared';
+import { getAllCategories } from '@/lib/mock-data';
+import { AdBannerPlaceholder, AdInFeedPlaceholder } from '@/components/AdPlaceholder';
 
 export default async function Home() {
-  // Pobierz aktywne kategorie z DB
-  const categoryList = await db.query.categories.findMany({
-    where: eq(categories.isActive, true),
-    orderBy: asc(categories.displayOrder),
-    limit: 10,
-  });
+  // Użyj mock danych
+  const categoryList = getAllCategories();
 
   return (
     <main>
       <h1>Witamy w colouring-Pages!</h1>
       <p>Programmatic SEO portal z kolorowankami dla dzieci.</p>
+      
+      {/* AdPlaceholder - Banner pod nagłówkiem */}
+      <AdBannerPlaceholder />
+      
       <section>
         <h2>Kategorie</h2>
         {categoryList.length > 0 ? (
-          <ul>
-            {categoryList.map((category) => (
-              <li key={category.id}>
-                <Link href={`/kategorie/${category.slug}`}>
-                  {category.namePl}
+          <div className="category-grid">
+            {categoryList.map((category, index) => (
+              <>
+                <Link
+                  key={category.id}
+                  href={`/kategorie/${category.slug}`}
+                  className="category-card"
+                >
+                  <div className="category-image">
+                    <div className="category-placeholder">{category.name.charAt(0)}</div>
+                  </div>
+                  <div className="category-info">
+                    <h2>{category.name}</h2>
+                    <p>{category.description}</p>
+                  </div>
                 </Link>
-              </li>
+                {/* In-feed ad co 4 kategorie */}
+                {index > 0 && index % 4 === 0 && <AdInFeedPlaceholder key={`ad-${index}`} />}
+              </>
             ))}
-          </ul>
+          </div>
         ) : (
           <p>Brak kategorii do wyświetlenia.</p>
         )}
       </section>
+
+      {/* AdPlaceholder - Banner pod kategoriami */}
+      <AdBannerPlaceholder />
     </main>
   );
 }
