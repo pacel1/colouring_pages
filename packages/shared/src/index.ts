@@ -89,3 +89,6 @@ export * from './queue/index';
 
 // Net exports (retry, http utilities)
 export * from './net/retry';
+
+// Storage exports (R2, Blob abstraction)
+export * from './storage/index';

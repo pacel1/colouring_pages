@@ -16,6 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.995.0",
     "bullmq": "^5.28.2",
     "dotenv": "^16.6.1",
     "drizzle-orm": "^0.45.1",
