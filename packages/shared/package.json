@@ -10,7 +10,8 @@
     "./config/env": "./src/config/env.ts",
     "./types": "./src/types/index.ts",
     "./db": "./src/db/index.ts",
-    "./queue": "./src/queue/index.ts"
+    "./queue": "./src/queue/index.ts",
+    "./storage": "./src/storage/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
