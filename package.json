@@ -29,6 +29,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:playwright": "playwright test",
     "validate:content": "tsx scripts/validate-content.ts",
+    "simulate:batch": "tsx scripts/simulate-daily-batch.ts",
     "typecheck": "pnpm -r typecheck",
     "=== PROMPTS ===": "==========",
     "prompt:harness": "tsx scripts/prompt-harness.ts",
