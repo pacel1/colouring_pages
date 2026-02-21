@@ -129,11 +129,15 @@ git push origin feature/my-new-feature
 
 ### 4.3 Status Checks (Wymagane)
 
-| Check | Opis |
-|-------|------|
-| `CI` | GitHub Actions - wszystkie testy |
-| `lint` | Sprawdzenie stylu kodu |
-| `build` | Kompilacja projektu |
+| Check | Opis | Job w CI |
+|-------|------|----------|
+| `lint-code` | Sprawdzenie stylu kodu | lint-code |
+| `type-check` | TypeScript type checking | type-check |
+| `build-web` | Kompilacja aplikacji web | build-web |
+| `run-tests` | Testy jednostkowe (vitest) | run-tests |
+| `run-e2e` | Testy E2E (Playwright) | run-e2e |
+
+> **Uwaga:** Wszystkie checks muszą przejść przed merge do main.
 
 ---
 

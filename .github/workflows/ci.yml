@@ -8,7 +8,7 @@ on:
 
 jobs:
   # Job 1: Install dependencies
-  install:
+  install-deps:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,8 +24,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
   # Job 2: Lint
-  lint:
-    needs: install
+  lint-code:
+    needs: install-deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -44,8 +44,8 @@ jobs:
         run: pnpm lint
 
   # Job 3: Typecheck
-  typecheck:
-    needs: install
+  type-check:
+    needs: install-deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -65,7 +65,7 @@ jobs:
 
   # Job 4: Build web
   build-web:
-    needs: install
+    needs: install-deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -82,3 +82,62 @@ jobs:
 
       - name: Build web app
         run: pnpm --filter web build
+
+  # Job 5: Unit tests
+  run-tests:
+    needs: install-deps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: coverage/
+          retention-days: 7
+
+  # Job 6: E2E tests
+  run-e2e:
+    needs: build-web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run E2E tests
+        run: pnpm test:e2e:playwright
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
