@@ -21,7 +21,7 @@ Ten dokument zawiera instrukcję zakładania kont w wymaganych portalach oraz ko
 | **Vercel** | Hosting web, deployment, Blob | ✅ Tak | Główny hosting |
 | **Neon** | PostgreSQL database | ✅ Tak | Serverless DB |
 | **Upstash** | Redis/Kafka (kolejka) | ✅ Tak (produkcja) | Serverless Redis |
-| **Cloudflare** | DNS, CDN, R2 Storage | 🟡 Opcjonalne | Dla R2 storage |
+| **Cloudflare** | DNS, CDN, R2 Storage | ✅ Tak | Dla R2 storage (obowiązkowe jeśli chcesz obrazy) |
 | **OpenAI** | AI generation | 🟡 Opcjonalne | Tylko jeśli dodajesz AI |
 
 ---
@@ -144,7 +144,11 @@ Ten dokument zawiera instrukcję zakładania kont w wymaganych portalach oraz ko
 
 ---
 
-### 4.5 Cloudflare R2 (Opcjonalne - Storage)
+### 4.5 Cloudflare R2 (Storage)
+
+> **Więcej szczegółów:** [docs/R2_SETUP.md](../R2_SETUP.md)
+
+⚠️ **Ważne:** Tokeny R2 (Access Key ID, Secret Access Key) są pokazywane **TYLKO RAZ** przy tworzeniu. Skopiuj je od razu!
 
 **Konto:** dash.cloudflare.com
 
@@ -229,14 +233,15 @@ Ten dokument zawiera instrukcję zakładania kont w wymaganych portalach oraz ko
 | `UPSTASH_REDIS_REST_URL` | z Upstash | Redis URL |
 | `UPSTASH_REDIS_REST_TOKEN` | z Upstash | Redis token |
 
-### 5.3 Opcjonalne - Storage
+### 5.3 Storage (R2 - rekomendowane)
 
 | Zmienna | Wartość | Opis |
 |---------|---------|------|
+| `R2_ACCOUNT_ID` | z Cloudflare | Account ID |
 | `R2_ACCESS_KEY_ID` | z Cloudflare | R2 access key |
 | `R2_SECRET_ACCESS_KEY` | z Cloudflare | R2 secret |
 | `R2_BUCKET_NAME` | z Cloudflare | Nazwa bucketu |
-| `R2_ACCOUNT_ID` | z Cloudflare | Account ID |
+| `R2_PUBLIC_URL` | z Cloudflare | Publiczny URL (opcjonalne) |
 
 ### 5.4 Opcjonalne - AI
 
